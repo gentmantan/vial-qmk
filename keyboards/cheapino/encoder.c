@@ -14,6 +14,12 @@ static bool colABPressed   = false;
 static uint16_t turns = 0;
 static bool last_turn_clockwise;
 
+// Required by quantum/encoder.c when ENCODER_DRIVER = custom.
+// Encoder events are queued from matrix_scan_kb() via fix_encoder_action(),
+// so no GPIO init or polling is needed here.
+void encoder_driver_init(void) {}
+void encoder_driver_task(void) {}
+
 void turned(bool clockwise) {
 	if (clockwise != last_turn_clockwise) {
         // Switched way, reset counter
@@ -25,7 +31,7 @@ void turned(bool clockwise) {
         return;
     }
 
-	encoder_exec_mapping(0, clockwise);
+    encoder_queue_event(0, clockwise);
 }
 
 void fix_encoder_action(matrix_row_t current_matrix[]) {

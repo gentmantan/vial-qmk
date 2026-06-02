@@ -24,10 +24,9 @@
 // How many "tents" should you turn per action
 #define ENCODER_RESOLUTION 1
 
-// These are just dummy definitions to make qmk compile
-// // The actual encoder logic is handled manually in encoder.c
-#define ENCODERS_PAD_A { GP12 }
-#define ENCODERS_PAD_B { GP13 }
+// Cheapino has one custom matrix-based encoder; pins are not used by the GPIO
+// driver but NUM_ENCODERS must be declared so encoder_map compiles correctly.
+#define NUM_ENCODERS 1
 
 #define ENCODER_MAP_KEY_DELAY 10
 
